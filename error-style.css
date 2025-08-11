@@ -36,45 +36,12 @@ body {
 .header .container {
     display: flex;
     align-items: center;
-    justify-content: space-between;
+    justify-content: flex-start;
 }
 
 .logo-img {
     height: 40px;
     width: auto;
-}
-
-.nav-list {
-    display: flex;
-    list-style: none;
-    gap: 2rem;
-}
-
-.nav-link {
-    text-decoration: none;
-    color: #333;
-    font-weight: 600;
-    transition: color 0.3s ease;
-    position: relative;
-}
-
-.nav-link:hover {
-    color: #3b82f6;
-}
-
-.nav-link::after {
-    content: '';
-    position: absolute;
-    bottom: -5px;
-    left: 0;
-    width: 0;
-    height: 2px;
-    background: #3b82f6;
-    transition: width 0.3s ease;
-}
-
-.nav-link:hover::after {
-    width: 100%;
 }
 
 /* Error Section */
@@ -529,12 +496,9 @@ body {
 /* Responsive Design */
 @media (max-width: 768px) {
     .header .container {
-        flex-direction: column;
+        flex-direction: row;
         gap: 1rem;
-    }
-    
-    .nav-list {
-        gap: 1rem;
+        justify-content: center;
     }
     
     .error-container {

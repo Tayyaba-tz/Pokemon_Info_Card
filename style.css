@@ -43,39 +43,6 @@ body {
     width: auto;
 }
 
-.nav-list {
-    display: flex;
-    list-style: none;
-    gap: 2rem;
-}
-
-.nav-link {
-    text-decoration: none;
-    color: #333;
-    font-weight: 600;
-    transition: color 0.3s ease;
-    position: relative;
-}
-
-.nav-link:hover {
-    color: #3b82f6;
-}
-
-.nav-link::after {
-    content: '';
-    position: absolute;
-    bottom: -5px;
-    left: 0;
-    width: 0;
-    height: 2px;
-    background: #3b82f6;
-    transition: width 0.3s ease;
-}
-
-.nav-link:hover::after {
-    width: 100%;
-}
-
 .search-container {
     display: flex;
     align-items: center;
@@ -374,17 +341,13 @@ body {
 /* Responsive Design */
 @media (max-width: 768px) {
     .header .container {
-        flex-direction: column;
-        gap: 1rem;
-    }
-    
-    .nav-list {
+        flex-direction: row;
         gap: 1rem;
     }
     
     .search-container {
-        width: 100%;
-        max-width: 300px;
+        width: auto;
+        max-width: 250px;
     }
     
     .hero-background {
@@ -418,11 +381,64 @@ body {
     }
     
     .pokemon-grid {
-        grid-template-columns: 1fr;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 1rem;
     }
     
     .gen-grid {
-        grid-template-columns: repeat(2, 1fr);
+        grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+        gap: 1rem;
+    }
+    
+    .search-container {
+        max-width: 200px;
+    }
+    
+    .search-input {
+        width: 150px;
+    }
+}
+
+
+
+.type.psychic { background: linear-gradient(45deg, #f78c9f, #c71585); }
+.type.dragon { background: linear-gradient(45deg, #7362e7, #4a23a0); }
+.type.fighting { background: linear-gradient(45deg, #d65f5f, #964b00); }
+.type.steel { background: linear-gradient(45deg, #b0b0b0, #708090); }
+.type.dark { background: linear-gradient(45deg, #5a5a5a, #2c2c2c); }
+.type.ghost { background: linear-gradient(45deg, #7b62a3, #4b0082); }
+.type.fairy { background: linear-gradient(45deg, #ffb6c1, #ff69b4); }
+
+
+@media (min-width: 1400px) {
+    .pokemon-grid {
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 2.5rem;
+    }
+    
+    .gen-grid {
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 2.5rem;
+    }
+    
+    .container {
+        max-width: 1400px;
+    }
+}
+
+@media (min-width: 1920px) {
+    .pokemon-grid {
+        grid-template-columns: repeat(6, 1fr);
+        gap: 3rem;
+    }
+    
+    .gen-grid {
+        grid-template-columns: repeat(5, 1fr);
+        gap: 3rem;
+    }
+    
+    .container {
+        max-width: 1600px;
     }
 }
 
