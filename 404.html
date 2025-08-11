@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>404 - Pokemon Not Found</title>
+    <link rel="stylesheet" href="error-style.css">
+</head>
+<body>
+    <!-- Header Section -->
+    <header class="header">
+        <div class="container">
+            <div class="logo">
+                <img src="images/pokemon-logo.png" alt="Pokemon Logo" class="logo-img">
+            </div>
+            <nav class="nav">
+                <ul class="nav-list">
+                    <li><a href="index.html" class="nav-link">Home</a></li>
+                    <li><a href="#pokedex" class="nav-link">Pokédex</a></li>
+                    <li><a href="#games" class="nav-link">Games</a></li>
+                    <li><a href="#cards" class="nav-link">Cards</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Error Section -->
+    <section class="error-section">
+        <div class="error-container">
+            <div class="error-content">
+                <div class="error-number">404</div>
+                <h1 class="error-title">Pokémon Not Found!</h1>
+                <p class="error-message">
+                    Oops! It looks like this Pokémon has escaped from our Pokédex. 
+                    Don't worry though, everything is still AWESOME!
+                </p>
+                <div class="error-actions">
+                    <a href="index.html" class="btn-primary">Go Home</a>
+                    <a href="#search" class="btn-secondary">Search Again</a>
+                </div>
+                
+                <!-- Search Section -->
+                <div class="search-section">
+                    <h3>Try searching for another Pokémon:</h3>
+                    <div class="search-container">
+                        <input type="text" placeholder="Enter Pokémon name or ID..." class="search-input">
+                        <button class="search-btn">Search</button>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="error-pokemon">
+                <div class="pokemon-character">
+                    <img src="images/confused-pikachu.png" alt="Confused Pikachu" class="confused-pokemon">
+                </div>
+                <div class="floating-elements">
+                    <div class="pokeball pokeball-1"></div>
+                    <div class="pokeball pokeball-2"></div>
+                    <div class="pokeball pokeball-3"></div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Background Elements -->
+        <div class="background-elements">
+            <div class="cloud cloud-1"></div>
+            <div class="cloud cloud-2"></div>
+            <div class="cloud cloud-3"></div>
+            <div class="mountain mountain-1"></div>
+            <div class="mountain mountain-2"></div>
+        </div>
+    </section>
+
+    <!-- Suggestions Section -->
+    <section class="suggestions">
+        <div class="container">
+            <h2 class="section-title">Popular Pokémon</h2>
+            <p class="section-subtitle">Maybe you were looking for one of these?</p>
+            <div class="pokemon-suggestions">
+                <div class="suggestion-card">
+                    <img src="images/pikachu.png" alt="Pikachu" class="suggestion-img">
+                    <h4>Pikachu</h4>
+                    <span class="pokemon-id">#025</span>
+                </div>
+                <div class="suggestion-card">
+                    <img src="images/charizard.png" alt="Charizard" class="suggestion-img">
+                    <h4>Charizard</h4>
+                    <span class="pokemon-id">#006</span>
+                </div>
+                <div class="suggestion-card">
+                    <img src="images/blastoise.png" alt="Blastoise" class="suggestion-img">
+                    <h4>Blastoise</h4>
+                    <span class="pokemon-id">#009</span>
+                </div>
+                <div class="suggestion-card">
+                    <img src="images/venusaur.png" alt="Venusaur" class="suggestion-img">
+                    <h4>Venusaur</h4>
+                    <span class="pokemon-id">#003</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2024 Pokemon Info Card. All rights reserved.</p>
+        </div>
+    </footer>
+</body>
+</html>
+
