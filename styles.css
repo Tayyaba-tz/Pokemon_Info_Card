@@ -34,8 +34,26 @@ body {
 
 .header .container {
     display: flex;
-    align-items: center;
     justify-content: space-between;
+    align-items: center;
+}
+
+.header-right {
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+}
+
+.about-link {
+    color: white;
+    text-decoration: none;
+    font-weight: 500;
+    font-size: 1rem;
+    transition: color 0.3s ease;
+}
+
+.about-link:hover {
+    color: #ffd700;
 }
 
 .logo-img {
@@ -190,7 +208,7 @@ body {
 
 .pokemon-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    grid-template-columns: repeat(3, 1fr);
     gap: 2rem;
     margin-top: 2rem;
 }
@@ -271,7 +289,7 @@ body {
 
 .gen-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    grid-template-columns: repeat(3, 1fr);
     gap: 2rem;
     margin-top: 2rem;
 }
@@ -345,33 +363,41 @@ body {
         gap: 1rem;
     }
     
+    .header-right {
+        gap: 1rem;
+    }
+    
+    .about-link {
+        font-size: 0.9rem;
+    }
+    
     .search-container {
         width: auto;
-        max-width: 250px;
+        max-width: 200px;
     }
     
     .hero-background {
         flex-direction: column;
         text-align: center;
-        gap: 2rem;
     }
     
-    .hero-title {
-        font-size: 2.5rem;
+    .hero-content {
+        max-width: 100%;
+        margin-bottom: 2rem;
     }
     
-    .hero-search {
-        flex-direction: column;
+    .hero-image {
+        max-width: 300px;
     }
     
     .pokemon-grid {
-        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        grid-template-columns: 1fr;
         gap: 1.5rem;
     }
     
     .gen-grid {
-        grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-        gap: 1rem;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 1.5rem;
     }
 }
 
@@ -412,12 +438,12 @@ body {
 
 @media (min-width: 1400px) {
     .pokemon-grid {
-        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        grid-template-columns: repeat(3, 1fr);
         gap: 2.5rem;
     }
     
     .gen-grid {
-        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        grid-template-columns: repeat(3, 1fr);
         gap: 2.5rem;
     }
     
@@ -428,12 +454,12 @@ body {
 
 @media (min-width: 1920px) {
     .pokemon-grid {
-        grid-template-columns: repeat(6, 1fr);
+        grid-template-columns: repeat(3, 1fr);
         gap: 3rem;
     }
     
     .gen-grid {
-        grid-template-columns: repeat(5, 1fr);
+        grid-template-columns: repeat(3, 1fr);
         gap: 3rem;
     }
     
