@@ -546,6 +546,11 @@ body {
 
 
 
+.popular-pokemon-section {
+    padding: 3rem 0 4rem 0;
+    margin-bottom: 2rem;
+}
+
 .popular-pokemon-section .pokemon-grid {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
