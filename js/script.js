@@ -1,9 +1,10 @@
 // script.js
 
 // Select existing DOM elements based on your current HTML structure
-const form = document.querySelector('form');  // Your search form element
-const input = document.querySelector('#pokemonIdInput');  // The search input box
-const card = document.querySelector('#pokemonCard');  // The container for the Pokémon info card
+const headerSearchInput = document.querySelector('.search-input');
+const headerSearchBtn = document.querySelector('.search-btn');
+const heroSearchInput = document.querySelector('.hero-search-input');
+const heroSearchBtn = document.querySelector('.hero-search-btn');
 
 /**
  * Helper to capitalize the first letter of a string
@@ -13,17 +14,20 @@ function capitalize(str) {
 }
 
 /**
- * Show a loading message inside the card container
+ * Show a loading message
  */
 function showLoading() {
-  card.innerHTML = `<p style="color: white; font-size: 1.2rem;">Loading...</p>`;
+  // Redirect to a results page or show loading in current page
+  console.log('Loading...');
 }
 
 /**
- * Show an error message inside the card container
+ * Show an error message and redirect to 404 page
  */
 function showError(message) {
-  card.innerHTML = `<p style="color: #ff6b6b; font-size: 1.2rem; font-weight: 600;">${message}</p>`;
+  console.error(message);
+  // Redirect to 404 page for exceptional errors
+  window.location.href = '404.html';
 }
 
 /**
@@ -73,74 +77,19 @@ function parseEvolutionChain(chain) {
 }
 
 /**
- * Build and display the Pokémon info card dynamically in your existing container
+ * Build and display the Pokémon info card dynamically and redirect to results page
  */
 function renderPokemonCard(data) {
-  const name = capitalize(data.name);
-  const typesHTML = data.types
-    .map(t => `<span class="type ${t.type.name}">${capitalize(t.type.name)}</span>`)
-    .join(' ');
-  
-  // Use front_default sprite or official artwork fallback
-  const imageUrl = data.sprites.front_default || 
-    `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${data.id}.png`;
-  
-  card.innerHTML = `
-    <div class="pokemon-card-inner">
-      <img class="pokemon-img" src="${imageUrl}" alt="${name}" />
-      <h3 class="pokemon-name">${name}</h3>
-      <div class="pokemon-types">${typesHTML}</div>
-      <p class="pokemon-id">#${data.id}</p>
-      <div id="evolutionChain"></div>
-    </div>
-  `;
+  // Store pokemon data in localStorage to pass to results page
+  localStorage.setItem('pokemonData', JSON.stringify(data));
+  // Redirect to results page
+  window.location.href = 'results.html';
 }
 
 /**
- * Render the evolution chain inside your card container, matching your style
+ * Handle search functionality
  */
-async function renderEvolutionChain(speciesUrl) {
-  try {
-    const speciesData = await fetchSpeciesData(speciesUrl);
-    const evoChainData = await fetchEvolutionChain(speciesData.evolution_chain.url);
-    const evolutionNames = parseEvolutionChain(evoChainData.chain);
-    
-    const evolutionContainer = document.getElementById('evolutionChain');
-    if (!evolutionContainer) return;
-
-    // Fetch data for each Pokémon in evolution chain to get sprites
-    const evoCards = await Promise.all(evolutionNames.map(async (name) => {
-      try {
-        const evoData = await fetchPokemonData(name);
-        const evoImg = evoData.sprites.front_default ||
-          `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${evoData.id}.png`;
-        return `
-          <div class="evo-stage" style="text-align:center; margin: 0 10px;">
-            <img class="pokemon-img" src="${evoImg}" alt="${capitalize(name)}" style="width: 60px;" />
-            <div style="color: white; font-weight: 600;">${capitalize(name)}</div>
-          </div>
-        `;
-      } catch {
-        return `<div class="evo-stage" style="color: white; margin: 0 10px;">${capitalize(name)}</div>`;
-      }
-    }));
-
-    // Join the evolution chain stages with right arrow
-    evolutionContainer.innerHTML = evoCards.join('<span style="color: white; font-size: 2rem;">→</span>');
-
-  } catch {
-    const evoContainer = document.getElementById('evolutionChain');
-    if (evoContainer) evoContainer.innerHTML = '';
-  }
-}
-
-/**
- * Main form submission handler
- */
-form.addEventListener('submit', async (e) => {
-  e.preventDefault();
-  const query = input.value.trim();
-
+async function handleSearch(query) {
   if (!query) {
     showError("Please enter a Pokémon name or ID.");
     return;
@@ -150,10 +99,64 @@ form.addEventListener('submit', async (e) => {
 
   try {
     const pokemonData = await fetchPokemonData(query);
-    renderPokemonCard(pokemonData);
-    await renderEvolutionChain(pokemonData.species.url);
-    input.value = '';
+    // Store evolution chain data as well
+    const speciesData = await fetchSpeciesData(pokemonData.species.url);
+    const evoChainData = await fetchEvolutionChain(speciesData.evolution_chain.url);
+    const evolutionNames = parseEvolutionChain(evoChainData.chain);
+    
+    // Store all data for results page
+    localStorage.setItem('pokemonData', JSON.stringify(pokemonData));
+    localStorage.setItem('evolutionChain', JSON.stringify(evolutionNames));
+    
+    // Redirect to results page
+    window.location.href = 'results.html';
   } catch (error) {
     showError(error.message);
   }
+}
+
+// Event listeners for search functionality
+headerSearchBtn.addEventListener('click', () => {
+  const query = headerSearchInput.value.trim();
+  handleSearch(query);
+});
+
+headerSearchInput.addEventListener('keypress', (e) => {
+  if (e.key === 'Enter') {
+    const query = headerSearchInput.value.trim();
+    handleSearch(query);
+  }
+});
+
+heroSearchBtn.addEventListener('click', () => {
+  const query = heroSearchInput.value.trim();
+  handleSearch(query);
+});
+
+heroSearchInput.addEventListener('keypress', (e) => {
+  if (e.key === 'Enter') {
+    const query = heroSearchInput.value.trim();
+    handleSearch(query);
+  }
+});
+
+// Featured Pokemon click handlers
+document.addEventListener('DOMContentLoaded', () => {
+  const pokemonCards = document.querySelectorAll('.pokemon-card');
+  pokemonCards.forEach(card => {
+    card.addEventListener('click', () => {
+      const pokemonName = card.querySelector('.pokemon-name').textContent.toLowerCase();
+      handleSearch(pokemonName);
+    });
+  });
+
+  // Generation click handlers
+  const genCards = document.querySelectorAll('.gen-card');
+  genCards.forEach((card, index) => {
+    card.addEventListener('click', () => {
+      // Store generation info and redirect to generation page
+      localStorage.setItem('selectedGeneration', index + 1);
+      window.location.href = 'generation.html';
+    });
+  });
 });
