@@ -1,15 +1,9 @@
 // generation.js
 
-/**
- * Helper to capitalize the first letter of a string
- */
 function capitalize(str) {
   return str ? str.charAt(0).toUpperCase() + str.slice(1) : '';
 }
 
-/**
- * Generation data mapping
- */
 const generationData = {
   1: { name: 'Kanto', region: 'Kanto', startId: 1, endId: 151 },
   2: { name: 'Johto', region: 'Johto', startId: 152, endId: 251 },
@@ -22,9 +16,6 @@ const generationData = {
   9: { name: 'Paldea', region: 'Paldea', startId: 906, endId: 1025 }
 };
 
-/**
- * Fetch Pokemon data by ID
- */
 async function fetchPokemonById(id) {
   try {
     const response = await fetch(`https://pokeapi.co/api/v2/pokemon/${id}`);
@@ -36,9 +27,6 @@ async function fetchPokemonById(id) {
   }
 }
 
-/**
- * Create Pokemon card HTML
- */
 function createPokemonCard(pokemon) {
   if (!pokemon) return '';
   
@@ -64,9 +52,6 @@ function createPokemonCard(pokemon) {
   `;
 }
 
-/**
- * Load generation Pokemon
- */
 async function loadGenerationPokemon() {
   const selectedGeneration = localStorage.getItem('selectedGeneration');
   
@@ -81,13 +66,32 @@ async function loadGenerationPokemon() {
 
   const genData = generationData[selectedGeneration];
   
-  // Set header
+  // Add header
   document.getElementById('generationHeader').innerHTML = `
     <h2 style="color: white; text-align: center; margin-bottom: 10px;">Generation ${selectedGeneration}</h2>
     <h3 style="color: white; text-align: center; margin-bottom: 30px;">${genData.region} Region</h3>
   `;
 
-  // Load Pokemon in batches to avoid overwhelming the API
+  // ✅ Insert navigation buttons
+  const navButtonsHtml = `
+    <div class="nav-buttons">
+      <button type="button" id="prevGen" class="nav-button">Previous Generation</button>
+      <button type="button" id="nextGen" class="nav-button">Next Generation</button>
+    </div>
+  `;
+  document.getElementById("generationHeader").insertAdjacentHTML("afterend", navButtonsHtml);
+
+  const prevBtn = document.getElementById("prevGen");
+  const nextBtn = document.getElementById("nextGen");
+
+  // Disable at ends
+  if (parseInt(selectedGeneration) <= 1) prevBtn.disabled = true;
+  if (parseInt(selectedGeneration) >= Object.keys(generationData).length) nextBtn.disabled = true;
+
+  prevBtn.addEventListener("click", () => navigateGeneration(parseInt(selectedGeneration) - 1));
+  nextBtn.addEventListener("click", () => navigateGeneration(parseInt(selectedGeneration) + 1));
+
+  // Load Pokemon
   const batchSize = 20;
   const totalPokemon = genData.endId - genData.startId + 1;
   const pokemonGrid = document.getElementById('generationPokemon');
@@ -109,7 +113,6 @@ async function loadGenerationPokemon() {
       
       pokemonGrid.innerHTML += cardsHTML;
       
-      // Update loading message
       const loadedCount = Math.min(endBatch - genData.startId + 1, totalPokemon);
       document.getElementById('loadingMessage').innerHTML = `
         <p style="color: white; text-align: center; font-size: 1.2rem;">
@@ -122,62 +125,52 @@ async function loadGenerationPokemon() {
     }
   }
   
-  // Hide loading message
   document.getElementById('loadingMessage').style.display = 'none';
   
-  // Add click handlers to Pokemon cards
-  const pokemonCards = document.querySelectorAll('.pokemon-card');
-  pokemonCards.forEach(card => {
+  // Card click handler
+  document.querySelectorAll('.pokemon-card').forEach(card => {
     card.addEventListener('click', () => {
       const pokemonName = card.getAttribute('data-pokemon-name');
       handlePokemonClick(pokemonName);
     });
   });
-  
-  // Clear the selected generation from localStorage
-  localStorage.removeItem('selectedGeneration');
+
+  // ✅ keep selectedGeneration in localStorage for nav
 }
 
-/**
- * Handle Pokemon card click
- */
+function navigateGeneration(genId) {
+  if (!generationData[genId]) return;
+  localStorage.setItem("selectedGeneration", genId);
+  window.location.href = "generation.html";
+}
+
 async function handlePokemonClick(pokemonName) {
   try {
     const response = await fetch(`https://pokeapi.co/api/v2/pokemon/${pokemonName}`);
     if (!response.ok) throw new Error('Pokemon not found');
     const pokemonData = await response.json();
-    
-    // Store data and redirect to results page
     localStorage.setItem('pokemonData', JSON.stringify(pokemonData));
     window.location.href = 'results.html';
-  } catch (error) {
+  } catch {
     window.location.href = '404.html';
   }
 }
 
-/**
- * Handle search functionality
- */
 async function handleSearch(query) {
   if (!query) return;
-  
   try {
     const response = await fetch(`https://pokeapi.co/api/v2/pokemon/${query.toLowerCase()}`);
     if (!response.ok) throw new Error('Pokémon not found');
     const pokemonData = await response.json();
-    
-    // Store data and redirect to results page
     localStorage.setItem('pokemonData', JSON.stringify(pokemonData));
     window.location.href = 'results.html';
-  } catch (error) {
+  } catch {
     window.location.href = '404.html';
   }
 }
 
-// Load data when page loads
 document.addEventListener('DOMContentLoaded', loadGenerationPokemon);
 
-// Add search functionality to header
 const headerSearchInput = document.querySelector('.search-input');
 const headerSearchBtn = document.querySelector('.search-btn');
 
@@ -192,4 +185,3 @@ headerSearchInput.addEventListener('keypress', (e) => {
     handleSearch(query);
   }
 });
-

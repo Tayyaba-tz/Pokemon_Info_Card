@@ -159,9 +159,6 @@ body {
     margin-top: 40px;
 }
 
-
-
-
 .generation-header h1 {
     font-size: 3.5em;
     color: #2c3e50;
@@ -235,6 +232,33 @@ body {
     font-size: 1.5em;
     font-weight: bold;
 }
+/* Generation navigation buttons */
+.nav-buttons {
+    display: flex;
+    justify-content: space-between;
+    margin: 20px 0;
+}
+
+.nav-button {
+    background-color: #0056b3;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1em;
+    transition:  0.3s ease;
+}
+
+.nav-button:hover {
+    background-color: #6390F0;
+}
+
+.nav-button:disabled {
+    background-color: #cccccc;
+    cursor: not-allowed;
+}
+
 
 @media (max-width: 768px) {
     .generation-header h1 {

@@ -1,13 +1,32 @@
-# Pokémon Info Card Project
-This project is a simple web application designed to display information about various Pokémon. It features a clean and responsive UI, with sections for Pokémon and exploration by generation.
+# Pokémon Info Card Project  
 
-## Project Structure
-The project is organized into the following folders:
-- 'css/': Contains CSS stylesheets for styling the web pages.
-- 'html/': Contains HTML files for the different pages of the application.
-- 'images/': Stores various Pokémon images used throughout the application.
-  
-## Features
-- **Home Page ('index.html'):** Displays featured Pokémon and allows users to explore by generation.
-- **About Page ('about.html'):** Provides information about the project.
-- **404 Error Page ('404.html'):** A custom error page that includes a section for popular Pokémon.
+A responsive web application that lets you **search, explore, and learn about Pokémon** using the [PokéAPI](https://pokeapi.co/).  
+It supports **Pokémon search**, **exploration by generation**, and **detailed Pokémon info cards** with stats, types, and evolution chains.  
+
+## 🚀 Features  
+
+- **Search Functionality**  
+  - Search any Pokémon by name or Pokédex ID from the header search bar.  
+  - Redirects to a detailed results page showing its stats, types, height, weight, and evolution chain.  
+
+- **Pokémon Results Page (`results.html`)**  
+  - Displays an info card with Pokémon **image, name, ID, types, stats, and details**.  
+  - Shows the **full evolution chain** with images.  
+  - Includes **Next/Previous buttons** to quickly navigate between Pokémon by ID.  
+
+- **Generations Page (`generation.html`)**  
+  - Browse Pokémon grouped by **generation (Kanto → Paldea)**.  
+  - Grid layout with Pokémon cards (sprite, name, ID, and types).  
+  - **Next/Previous Generation buttons** for easy navigation.  
+  - Click any Pokémon card to open its full **info card** in the results page.  
+
+- **Custom Error Page (`404.html`)**  
+  - User-friendly error page shown if a Pokémon is not found.  
+  - Includes suggestions for popular Pokémon.  
+
+- **About Page (`about.html`)**  
+  - Provides project background and purpose.  
+
+- **Responsive Design**  
+  - Mobile-friendly grid and card layouts.  
+  - Styled with modern gradients, shadows, and hover effects.  
