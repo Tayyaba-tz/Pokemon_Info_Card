@@ -3,7 +3,7 @@
 A responsive web application that lets you **search, explore, and learn about Pokémon** using the [PokéAPI](https://pokeapi.co/).  
 It supports **Pokémon search**, **exploration by generation**, and **detailed Pokémon info cards** with stats, types, and evolution chains.  
 
-## 🚀 Features  
+## Features  
 
 - **Search Functionality**  
   - Search any Pokémon by name or Pokédex ID from the header search bar.  
@@ -29,4 +29,7 @@ It supports **Pokémon search**, **exploration by generation**, and **detailed P
 
 - **Responsive Design**  
   - Mobile-friendly grid and card layouts.  
-  - Styled with modern gradients, shadows, and hover effects.  
+  - Styled with modern gradients, shadows, and hover effects. 
+
+## Credits
+Developed by Tayyaba Zubaid. 
